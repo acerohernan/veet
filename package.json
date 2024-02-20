@@ -1,0 +1,15 @@
+{
+  "name": "veet",
+  "version": "1.0.0",
+  "private": true,
+  "main": "index.js",
+  "author": "Hernan Acero @acerohernan <contacto.acero.hernan@gmail.com>",
+  "license": "MIT",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "www": "yarn workspace @veet/www"
+  }
+}
