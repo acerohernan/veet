@@ -3,6 +3,7 @@ import express from "express";
 import helmet from "helmet";
 
 import { env } from "./config/env";
+import { logger } from "./config/logger";
 
 const app = express();
 
@@ -11,7 +12,7 @@ app.use(cors({ origin: "*" }));
 app.use(helmet());
 
 app.listen(env.PORT, () => {
-  console.log(
-    `Application running on port: ${env.PORT} in ${env.NODE_ENV} mode`
+  logger.info(
+    `Application running on port: ${env.PORT} in ${env.NODE_ENV} mode and with ${env.LOG_LEVEL} log level.`
   );
 });

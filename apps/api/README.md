@@ -2,8 +2,8 @@
 
 ## Features
 
-- [ ] Type-safety for env variables
-- [ ] Logger
+- [x] Type-safety for env variables
+- [x] Logger
 - [ ] Eslint
 - [ ] Prettier
 - [ ] Docker
