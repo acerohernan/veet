@@ -10,6 +10,7 @@
     "packages/*"
   ],
   "scripts": {
-    "web": "yarn workspace @veet/web"
+    "web": "yarn workspace @veet/web",
+    "api": "yarn workspace @veet/api"
   }
 }
