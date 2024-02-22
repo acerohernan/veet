@@ -4,7 +4,7 @@
 
 - [x] Eslint
 - [x] MaterialUI
-- [ ] Prettier
+- [x] Prettier
 - [x] Storybook
 - [ ] Jest
 - [ ] React Testing Library
