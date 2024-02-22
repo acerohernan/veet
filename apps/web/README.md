@@ -1,4 +1,4 @@
-# Veet - Frontend
+# Veet - Web
 
 ## Features
 
