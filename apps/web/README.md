@@ -12,3 +12,4 @@
 - [ ] Continuous Integration
 - [ ] Continuous Deployment
 - [ ] Test coverage
+- [ ] SEO
