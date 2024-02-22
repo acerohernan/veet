@@ -2,13 +2,13 @@
 
 ## Features
 
+- [x] Eslint
 - [x] MaterialUI
-- [ ] Storybook
+- [ ] Prettier
+- [x] Storybook
 - [ ] Jest
 - [ ] React Testing Library
 - [ ] Cypress
-- [ ] Eslint
-- [ ] Prettier
-- [ ] CI/CD
+- [ ] Continuous Integration
+- [ ] Continuous Deployment
 - [ ] Test coverage
-- [ ] Redux
