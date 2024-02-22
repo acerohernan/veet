@@ -1,5 +1,6 @@
-import { Box, Button, InputAdornment, TextField, Typography } from "@mui/material";
-import KeyboardIcon from "@mui/icons-material/Keyboard";
+import { Box, Button, Typography } from "@mui/material";
+
+import CallIcon from "@mui/icons-material/Call";
 import VideoCallOutlinedIcon from "@mui/icons-material/VideoCallOutlined";
 
 export const HomePage = () => {
@@ -8,19 +9,29 @@ export const HomePage = () => {
       width="100%"
       height="100vh"
       sx={{
-        display: "flex",
-        alignItems: {
-          xs: "center",
-          md: "center",
+        display: {
+          xs: "flex",
         },
+        alignItems: "center",
       }}
     >
-      <Box textAlign="center" width="100%" padding={4} maxWidth={700} margin="0px auto">
+      <Box
+        width="100%"
+        margin="0px auto"
+        padding={4}
+        maxWidth={600}
+        sx={{
+          textAlign: {
+            xs: "center",
+            md: "start",
+          },
+        }}
+      >
         <Typography variant="h3" marginBottom={3}>
-          Premium video meetings. Now free for everyone
+          Video call and meetings for everyone
         </Typography>
         <Typography fontWeight={300} fontSize="1.125rem">
-          We re-engineered the service we built for secure bussiness meetings, to make it free and avaliable for all.
+          Veet provides secure, easy-to-use video calls and meetings for everyone, on any device
         </Typography>
         <Box
           width="100%"
@@ -28,7 +39,6 @@ export const HomePage = () => {
             display: "flex",
             flexDirection: {
               xs: "column",
-              md: "row",
             },
             alignItems: {
               xs: "start",
@@ -45,29 +55,19 @@ export const HomePage = () => {
           <Button
             variant="contained"
             size="large"
-            css={{ fontSize: "1rem", flexShrink: 0, fontWeight: 600 }}
+            css={{ fontSize: "1rem", flexShrink: 0, fontWeight: 600, width: "100%" }}
             startIcon={<VideoCallOutlinedIcon />}
           >
             New meeting
           </Button>
-          <Box width="100%" display="flex" gap={1}>
-            <TextField
-              variant="outlined"
-              fullWidth
-              placeholder="Enter a code or link"
-              size="medium"
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <KeyboardIcon />
-                  </InputAdornment>
-                ),
-              }}
-            />
-            <Button size="large" css={{ fontSize: "1rem" }} disabled>
-              Join
-            </Button>
-          </Box>
+          <Button
+            variant="outlined"
+            size="large"
+            css={{ fontSize: "1rem", flexShrink: 0, fontWeight: 600, width: "100%" }}
+            startIcon={<CallIcon />}
+          >
+            Enter demo meeting
+          </Button>
         </Box>
       </Box>
     </Box>
