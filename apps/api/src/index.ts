@@ -1,18 +1,22 @@
-import cors from "cors";
-import express from "express";
-import helmet from "helmet";
-
-import { env } from "./config/env";
 import { logger } from "./config/logger";
+import { Server } from "./server";
 
-const app = express();
+let server: Server;
 
-// allow cors from any origin, the service will be public
-app.use(cors({ origin: "*" }));
-app.use(helmet());
+try {
+  server = new Server();
+  server.run();
+} catch (error) {
+  logger.error("Unexpected error happened", { error });
+  process.exit(1);
+}
 
-app.listen(env.PORT, () => {
-  logger.info(
-    `Application running on port: ${env.PORT} in ${env.NODE_ENV} mode and with ${env.LOG_LEVEL} log level.`
-  );
+const signals = ["SIGINT", "SIGTERM"] as NodeJS.Signals[];
+signals.forEach((s) => {
+  process.on(s, () => {
+    logger.info(`${s} signal received, shutting down gracefully...`);
+    if (!server) return process.exit(1);
+
+    server.stop().then(() => process.exit(1));
+  });
 });
