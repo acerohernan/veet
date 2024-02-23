@@ -7,7 +7,7 @@
 - [x] Eslint
 - [x] Prettier
 - [x] Docker
-- [ ] OpenAPI Spec (Swagger)
+- [x] OpenAPI Spec (Swagger)
 - [ ] Unit testing
 - [ ] Integration testing
 - [ ] E2E testing
