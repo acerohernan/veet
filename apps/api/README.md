@@ -17,3 +17,4 @@
 - [ ] AWS Integration
 - [ ] Type-safety endpoints
 - [ ] Monitoring
+- [ ] Rate-limiting
