@@ -1,7 +1,9 @@
 import express from 'express';
 import swaggerUi from 'swagger-ui-express';
 
-import { openapiSpecification } from './config/swagger';
+import { openapiSpecification } from '@/config/swagger';
+
+import { v1Router } from './v1';
 
 export const router = express.Router();
 
@@ -19,6 +21,9 @@ router.get('/', (_, res) => res.sendStatus(200));
  * /docs:
  *   get:
  *     summary: Open API docs
- *     description: Endpoints documentation
+ *     description: Open API documentation
  */
 router.use('/docs', swaggerUi.serve, swaggerUi.setup(openapiSpecification));
+
+// Routers
+router.use('/v1', v1Router);

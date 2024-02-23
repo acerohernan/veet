@@ -7,7 +7,7 @@ import express from 'express';
 import { env } from '@/config/env';
 import { logger } from '@/config/logger';
 
-import { router } from './router';
+import { router } from './routes';
 
 export class Server {
   httpServer: http.Server;

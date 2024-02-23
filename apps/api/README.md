@@ -18,3 +18,24 @@
 - [ ] Type-safety endpoints
 - [ ] Monitoring
 - [ ] Rate-limiting
+
+## Project sctructure
+
+```js
++-- src
+|   +-- config // environment configuration
+|   +-- controllers // controllers with injected services from `domain` folder
+|   +-- domain // source code
+|   |   +-- entities // core entities
+|   |   +-- interfaces // interfaces for interacting with external services e.g. Database, Cache, FileStorage etc
+|   |   +-- schemas // objects for input validation
+|   |   +-- services // bussiness logic
+|   |   +-- types // shared types
+|   +-- infrastructure // adapters for external services like PostgreSQL, Redis, S3, etc
+|   +-- routes // routes with Open API comments
+|   +-- server.ts // server configuration
+|   +-- index.ts // entrypoint for the app
+|   +-- *
++-- tests // E2E testing
++-- .env.example // example values for environment variables
+```
