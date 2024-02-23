@@ -1,11 +1,22 @@
 import winston from "winston";
 
-import { env } from "./env";
-import { LOG_LEVEL } from "./types";
-
 export const logger = winston.createLogger({
-  level: env.LOG_LEVEL,
-  format: winston.format.json(),
-  defaultMeta: { service: "api-service" },
-  transports: [new winston.transports.Console({ level: LOG_LEVEL.DEBUG })],
+  level: process.env.LOG_LEVEL,
+  transports: [
+    new winston.transports.Console({
+      format: winston.format.combine(
+        winston.format.colorize(),
+        winston.format.metadata(),
+        winston.format.timestamp({
+          format: "YY-MM-DD HH:mm:ss",
+        }),
+        winston.format.printf(
+          (info) =>
+            `[${info.timestamp}] [${info.level}] : ${info.message} ${
+              info.metadata ? JSON.stringify(info.metadata) : ""
+            }`
+        )
+      ),
+    }),
+  ],
 });
