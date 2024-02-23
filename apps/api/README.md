@@ -6,7 +6,7 @@
 - [x] Logger
 - [x] Eslint
 - [x] Prettier
-- [ ] Docker
+- [x] Docker
 - [ ] OpenAPI Spec (Swagger)
 - [ ] Unit testing
 - [ ] Integration testing
