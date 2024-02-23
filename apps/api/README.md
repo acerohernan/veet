@@ -4,8 +4,8 @@
 
 - [x] Type-safety for env variables
 - [x] Logger
-- [ ] Eslint
-- [ ] Prettier
+- [x] Eslint
+- [x] Prettier
 - [ ] Docker
 - [ ] OpenAPI Spec (Swagger)
 - [ ] Unit testing
