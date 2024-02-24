@@ -1,5 +1,5 @@
 export class RoomService {
   createRoom(): { roomId: string; accessToken: string } {
-    return { accessToken: '', roomId: '' };
+    return { accessToken: 'token', roomId: 'demo_room' };
   }
 }

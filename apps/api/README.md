@@ -8,7 +8,7 @@
 - [x] Prettier
 - [x] Docker
 - [x] OpenAPI Spec (Swagger)
-- [ ] Unit testing
+- [x] Unit testing
 - [ ] Integration testing
 - [ ] E2E testing
 - [ ] Load testing
