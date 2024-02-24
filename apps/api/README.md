@@ -9,8 +9,8 @@
 - [x] Docker
 - [x] OpenAPI Spec (Swagger)
 - [x] Unit testing
-- [ ] Integration testing
-- [ ] E2E testing
+- [x] Integration testing
+- [x] E2E testing
 - [ ] Load testing
 - [ ] Continuous Integration
 - [ ] Continuous Deployment
@@ -36,6 +36,8 @@
 |   +-- server.ts // server configuration
 |   +-- index.ts // entrypoint for the app
 |   +-- *
-+-- tests // E2E testing
++-- tests // testing folder
+|   |   +-- e2e // E2E testing
+|   |   +-- integration // Integration with external services testing. e.g. Redis, S3, PostgreSQL, etc
 +-- .env.example // example values for environment variables
 ```

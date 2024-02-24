@@ -7,7 +7,7 @@ import { LOG_LEVEL } from './types';
 config();
 
 const envSchema = z.object({
-  NODE_ENV: z.enum(['development', 'production']),
+  NODE_ENV: z.enum(['development', 'production', 'test']),
   PORT: z.preprocess(Number, z.number()),
   LOG_LEVEL: z.nativeEnum(LOG_LEVEL),
 });

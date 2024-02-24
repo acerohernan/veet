@@ -40,5 +40,7 @@ export class Server {
     });
   }
 
-  async stop(): Promise<void> {}
+  stop(): void {
+    this.httpServer.close();
+  }
 }
