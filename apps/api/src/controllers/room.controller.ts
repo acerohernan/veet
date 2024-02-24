@@ -5,13 +5,13 @@ import type { RoomService } from '../domain/services/room.service';
 export class RoomController {
   constructor(private readonly roomService: RoomService) {}
 
-  postCreateRoom(req: Request, res: Response): void {
-    this.roomService.createRoom();
+  async postCreateRoom(req: Request, res: Response): Promise<void> {
+    await this.roomService.createRoom({ roomId: '23123' });
 
     res.sendStatus(200);
   }
 
-  getDemoCredentials(req: Request, res: Response): void {
+  async getDemoCredentials(req: Request, res: Response): Promise<void> {
     res.sendStatus(200);
   }
 }
