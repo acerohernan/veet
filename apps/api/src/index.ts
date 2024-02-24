@@ -9,10 +9,7 @@ try {
 } catch (error) {
   logger.error('[Main] unexpected error happened', { error });
   if (!server) process.exit(1);
-  server
-    .stop()
-    .then(() => process.exit(1))
-    .catch(() => process.exit(1));
+  server.stop();
 }
 
 const signals = ['SIGINT', 'SIGTERM'] as NodeJS.Signals[];
@@ -20,9 +17,6 @@ signals.forEach((s) => {
   process.on(s, () => {
     logger.info(`[Main] ${s} signal received, shutting down gracefully...`);
     if (!server) return process.exit(1);
-    server
-      .stop()
-      .then(() => process.exit(1))
-      .catch(() => process.exit(1));
+    server.stop();
   });
 });
