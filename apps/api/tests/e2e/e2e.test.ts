@@ -25,4 +25,16 @@ describe('API Service routes', () => {
       expect(res.status).toBe(200);
     });
   });
+
+  describe('POST /v1/room', () => {
+    it('should run correctly and return an access token', async () => {
+      const res = await _request.post('/v1/room').send({
+        roomId: 'room_test123',
+        participant: { id: 'test123', name: 'test123' },
+      });
+
+      expect(res.status).toBe(201);
+      expect(res.body.accessToken).toBeDefined();
+    });
+  });
 });
