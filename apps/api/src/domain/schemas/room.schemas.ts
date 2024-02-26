@@ -17,10 +17,8 @@ export interface CreateRoomResponse {
 
 // get demo room credentials
 export const GetDemoRoomCredsSchema = z.object({
-  participant: z.object({
-    id: z.string(),
-    name: z.string(),
-  }),
+  participantId: z.string(),
+  participantName: z.string(),
 });
 
 export type GetDemoRoomCredsDTO = z.infer<typeof GetDemoRoomCredsSchema>;

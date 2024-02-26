@@ -29,7 +29,14 @@ export class LivekitRTCService implements RTCService {
       name: participantName,
     });
 
-    token.addGrant({ room: roomId });
+    token.addGrant({
+      room: roomId,
+      canPublish: true,
+      canPublishData: true,
+      canSubscribe: true,
+      roomJoin: true,
+      canUpdateOwnMetadata: true,
+    });
 
     return { accessToken: await token.toJwt() };
   }

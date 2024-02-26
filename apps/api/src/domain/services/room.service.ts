@@ -4,10 +4,13 @@ import {
   type CreateRoomResponse,
   type GetDemoRoomCredsResponse,
   type GetDemoRoomCredsDTO,
+  GetDemoRoomCredsSchema,
 } from '../schemas/room.schemas';
+
 import type { RTCService } from '../interfaces/rtc.service';
 
 import { parseZodError } from '../utils/zod';
+
 import { BadRequestError } from '../errors/http';
 
 export class RoomService {
@@ -30,13 +33,18 @@ export class RoomService {
     return { roomId: dto.roomId, accessToken: result.accessToken };
   }
 
-  async createDemoCredentials(
+  async getDemoCredentials(
     dto: GetDemoRoomCredsDTO,
   ): Promise<GetDemoRoomCredsResponse> {
+    const validation = GetDemoRoomCredsSchema.safeParse(dto);
+
+    if (!validation.success)
+      throw new BadRequestError(parseZodError(validation.error));
+
     const resp = await this.rtcService.createAccessToken(
       'demo',
-      dto.participant.id,
-      dto.participant.name,
+      dto.participantId,
+      dto.participantName,
     );
     return { accessToken: resp.accessToken };
   }

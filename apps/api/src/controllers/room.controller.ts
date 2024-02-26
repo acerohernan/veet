@@ -12,12 +12,12 @@ export class RoomController {
 
   async postCreateRoom(req: Request, res: Response): Promise<void> {
     const resp = await this.roomService.createRoom(req.body as CreateRoomDTO);
-    res.send(resp);
+    res.status(201).send(resp);
   }
 
   async getDemoCredentials(req: Request, res: Response): Promise<void> {
-    const resp = await this.roomService.createDemoCredentials(
-      req.body as GetDemoRoomCredsDTO,
+    const resp = await this.roomService.getDemoCredentials(
+      req.query as GetDemoRoomCredsDTO,
     );
     res.send(resp);
   }
