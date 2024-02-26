@@ -37,4 +37,16 @@ describe('API Service routes', () => {
       expect(res.body.accessToken).toBeDefined();
     });
   });
+
+  describe('GET/v1/room/demo', () => {
+    it('should run correctly and return an access token', async () => {
+      const query = new URLSearchParams();
+      query.append('participantId', 'participant123');
+      query.append('participantName', 'participant123_name');
+      const res = await _request.get('/v1/room/demo').query(query.toString());
+
+      expect(res.status).toBe(200);
+      expect(res.body.accessToken).toBeDefined();
+    });
+  });
 });
