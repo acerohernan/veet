@@ -26,8 +26,8 @@ export class RoomService {
 
     const result = await this.rtcService.createAccessToken(
       dto.roomId,
-      dto.participant.id,
-      dto.participant.name,
+      dto.participantId,
+      dto.participantName,
     );
 
     return { roomId: dto.roomId, accessToken: result.accessToken };

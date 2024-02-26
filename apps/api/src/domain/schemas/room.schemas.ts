@@ -3,10 +3,8 @@ import z from 'zod';
 // create room
 export const CreateRoomSchema = z.object({
   roomId: z.string(),
-  participant: z.object({
-    id: z.string(),
-    name: z.string(),
-  }),
+  participantId: z.string(),
+  participantName: z.string(),
 });
 
 export type CreateRoomDTO = z.infer<typeof CreateRoomSchema>;
