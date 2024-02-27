@@ -1,34 +1,39 @@
-import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { DrawerSection } from "./types";
+import { EntityState, PayloadAction, createEntityAdapter, createSlice } from "@reduxjs/toolkit";
+
+import { LocalParticipant, RemoteParticipant, Room } from "@/lib/types";
 
 interface IRoomState {
-  // map of roomId -> accessToken
-  tokens: Record<string, string>;
-
-  isDrawerOpen: boolean;
-  drawerSection: string;
+  room: Room | null;
+  localParticipant: LocalParticipant | null;
+  participants: EntityState<RemoteParticipant, string>;
 }
 
+const participantAdapter = createEntityAdapter<RemoteParticipant>();
+
 const initialState: IRoomState = {
-  tokens: JSON.parse(sessionStorage.getItem("tokens") || "{}"),
-  isDrawerOpen: false,
-  drawerSection: DrawerSection.People,
+  room: null,
+  localParticipant: null,
+  participants: participantAdapter.getInitialState(),
 };
 
 const roomSlice = createSlice({
   name: "room",
   initialState,
   reducers: {
-    storeToken: (state, action: PayloadAction<{ roomId: string; token: string }>) => {
-      const { roomId, token } = action.payload;
-      state.tokens = { ...state.tokens, [roomId]: token };
+    setRoom: (state, action: PayloadAction<Room | null>) => {
+      state.room = action.payload;
     },
-    openDrawer: (state, action: PayloadAction<{ section: DrawerSection }>) => {
-      state.isDrawerOpen = true;
-      state.drawerSection = action.payload.section;
+    setLocalParticipant: (state, action: PayloadAction<LocalParticipant | null>) => {
+      state.localParticipant = action.payload;
     },
-    closeDrawer: (state) => {
-      state.isDrawerOpen = false;
+    setParticipants: (state, action: PayloadAction<RemoteParticipant[]>) => {
+      state.participants = participantAdapter.setMany(state.participants, action);
+    },
+    addParticipant: (state, action: PayloadAction<RemoteParticipant>) => {
+      state.participants = participantAdapter.addOne(state.participants, action);
+    },
+    removeParticipant: (state, action: PayloadAction<string>) => {
+      state.participants = participantAdapter.removeOne(state.participants, action);
     },
   },
 });
