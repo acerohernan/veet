@@ -1,9 +1,53 @@
-import { Box, Button, Typography } from "@mui/material";
+import { useState } from "react";
+import LoadingButton from "@mui/lab/LoadingButton";
+import { useNavigate } from "react-router-dom";
+import { Box, Typography } from "@mui/material";
 
 import CallIcon from "@mui/icons-material/Call";
 import VideoCallOutlinedIcon from "@mui/icons-material/VideoCallOutlined";
 
-export const HomePage = () => {
+import { API } from "@/api";
+
+import { captureError } from "@/utils/error";
+
+const HomePage = () => {
+  const navigate = useNavigate();
+
+  const [createRoomLoading, setCreateRoomLoading] = useState(false);
+  const [enterDemoRoomLoading, setEnterDemoRoomLoading] = useState(false);
+
+  const createRoom = async () => {
+    setCreateRoomLoading(true);
+    try {
+      const name = "Guest";
+      const res = await API.room.createRoom({ name });
+      if (!res.data) return;
+
+      const { roomId, accessToken } = res.data;
+      navigate(`/${roomId}?accessToken=${accessToken}`);
+    } catch (err) {
+      captureError(err);
+    } finally {
+      setCreateRoomLoading(false);
+    }
+  };
+
+  const enterDemoRoom = async () => {
+    setEnterDemoRoomLoading(true);
+    try {
+      const name = "Guest";
+      const res = await API.room.getDemoCredentials({ name });
+      if (!res.data) return;
+
+      const { accessToken } = res.data;
+      navigate(`/demo?accessToken=${accessToken}`);
+    } catch (err) {
+      captureError(err);
+    } finally {
+      setEnterDemoRoomLoading(false);
+    }
+  };
+
   return (
     <Box
       width="100%"
@@ -52,24 +96,30 @@ export const HomePage = () => {
           }}
           gap={3}
         >
-          <Button
+          <LoadingButton
             variant="contained"
             size="large"
             css={{ fontSize: "1rem", flexShrink: 0, fontWeight: 600, width: "100%" }}
             startIcon={<VideoCallOutlinedIcon />}
+            onClick={createRoom}
+            loading={createRoomLoading}
           >
             New meeting
-          </Button>
-          <Button
+          </LoadingButton>
+          <LoadingButton
             variant="outlined"
             size="large"
             css={{ fontSize: "1rem", flexShrink: 0, fontWeight: 600, width: "100%" }}
             startIcon={<CallIcon />}
+            onClick={enterDemoRoom}
+            loading={enterDemoRoomLoading}
           >
             Enter demo meeting
-          </Button>
+          </LoadingButton>
         </Box>
       </Box>
     </Box>
   );
 };
+
+export default HomePage;
