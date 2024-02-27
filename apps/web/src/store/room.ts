@@ -1,6 +1,6 @@
 import { EntityState, PayloadAction, createEntityAdapter, createSlice } from "@reduxjs/toolkit";
 
-import { LocalParticipant, RemoteParticipant, Room } from "@/lib/types";
+import { LocalParticipant, RemoteParticipant, Room } from "./types";
 
 interface IRoomState {
   room: Room | null;

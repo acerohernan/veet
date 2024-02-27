@@ -4,8 +4,7 @@ import { handleParticipantConnected, handleParticipantDisconnected } from "./lis
 
 import { store } from "@/store";
 import { roomActions } from "@/store/room";
-
-import { RemoteParticipant } from "../types";
+import { RemoteParticipant } from "@/store/types";
 
 let room: Room | undefined;
 
