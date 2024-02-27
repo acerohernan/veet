@@ -11,7 +11,8 @@ describe('RoomService', () => {
     it('should return a roomId and accessToken', async () => {
       const result = await roomService.createRoom({
         roomId: 'room123',
-        participant: { id: '', name: '' },
+        participantId: '',
+        participantName: '',
       });
       expect(result.roomId).toBeDefined();
       expect(result.accessToken).toBeDefined();
