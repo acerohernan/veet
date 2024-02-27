@@ -2,10 +2,12 @@ import { configureStore } from "@reduxjs/toolkit";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 
 import { roomReducer } from "./room";
+import { navigationReducer } from "./navigation";
 
 export const store = configureStore({
   reducer: {
     room: roomReducer,
+    navigation: navigationReducer,
   },
 });
 
