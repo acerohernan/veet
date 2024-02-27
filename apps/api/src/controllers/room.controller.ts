@@ -18,8 +18,8 @@ export class RoomController {
 
   async getDemoCredentials(req: Request, res: Response): Promise<void> {
     const resp = await this.roomService.getDemoCredentials({
-      ...req.body,
       participantId: generateID(),
+      participantName: String(req.query.participantName) ?? generateID(),
     });
     res.send(resp);
   }
