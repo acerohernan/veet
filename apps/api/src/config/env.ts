@@ -10,6 +10,9 @@ const envSchema = z.object({
   NODE_ENV: z.enum(['development', 'production', 'test']),
   PORT: z.preprocess(Number, z.number()),
   LOG_LEVEL: z.nativeEnum(LOG_LEVEL),
+  LIVEKIT_API_KEY: z.string(),
+  LIVEKIT_API_SECRET: z.string(),
+  LIVEKIT_URL: z.string(),
 });
 
 const result = envSchema.safeParse(process.env);

@@ -9,7 +9,10 @@ describe('RoomService', () => {
   afterAll(() => {});
   describe('createRoom', () => {
     it('should return a roomId and accessToken', async () => {
-      const result = await roomService.createRoom({ roomId: 'room123' });
+      const result = await roomService.createRoom({
+        roomId: 'room123',
+        participant: { id: '', name: '' },
+      });
       expect(result.roomId).toBeDefined();
       expect(result.accessToken).toBeDefined();
     });

@@ -1,9 +1,10 @@
-import { LivekitRTCService } from '@/infrastructure/livekit/livekit.rtc.service';
-import { RoomController } from './room.controller';
-
 import { RoomService } from '@/domain/services/room.service';
 
-// services needed fro controllers
+import { LivekitRTCService } from '@/infrastructure/livekit/livekit.rtc.service';
+
+import { RoomController } from './room.controller';
+
+// services needed for controllers
 const rtcService = new LivekitRTCService();
 const roomService = new RoomService(rtcService);
 

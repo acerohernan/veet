@@ -1,8 +1,8 @@
-import express from 'express';
+import Router from 'express-promise-router';
 
 import { roomController } from '@/controllers';
 
-export const v1Router = express.Router();
+export const v1Router = Router();
 
 /**
  * @swagger
@@ -22,7 +22,10 @@ export const v1Router = express.Router();
  *            accessToken:
  *             type: string
  */
-v1Router.post('/room', (req, res) => roomController.postCreateRoom(req, res));
+v1Router.post(
+  '/room',
+  async (req, res) => await roomController.postCreateRoom(req, res),
+);
 
 /**
  * @swagger
@@ -40,6 +43,7 @@ v1Router.post('/room', (req, res) => roomController.postCreateRoom(req, res));
  *            accessToken:
  *             type: string
  */
-v1Router.get('/room/demo', (req, res) =>
-  roomController.getDemoCredentials(req, res),
+v1Router.get(
+  '/room/demo',
+  async (req, res) => await roomController.getDemoCredentials(req, res),
 );

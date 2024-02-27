@@ -2,6 +2,8 @@ import {
   CreateRoomSchema,
   type CreateRoomDTO,
   type CreateRoomResponse,
+  type GetDemoRoomCredsResponse,
+  type GetDemoRoomCredsDTO,
 } from '../schemas/room.schemas';
 import type { RTCService } from '../interfaces/rtc.service';
 
@@ -17,8 +19,25 @@ export class RoomService {
     if (!validation.success)
       throw new BadRequestError(parseZodError(validation.error));
 
-    const result = await this.rtcService.createRoom(dto.roomId);
+    await this.rtcService.createRoom(dto.roomId);
+
+    const result = await this.rtcService.createAccessToken(
+      dto.roomId,
+      dto.participant.id,
+      dto.participant.name,
+    );
 
     return { roomId: dto.roomId, accessToken: result.accessToken };
+  }
+
+  async createDemoCredentials(
+    dto: GetDemoRoomCredsDTO,
+  ): Promise<GetDemoRoomCredsResponse> {
+    const resp = await this.rtcService.createAccessToken(
+      'demo',
+      dto.participant.id,
+      dto.participant.name,
+    );
+    return { accessToken: resp.accessToken };
   }
 }
