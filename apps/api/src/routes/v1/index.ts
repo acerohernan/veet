@@ -1,6 +1,6 @@
 import Router from 'express-promise-router';
 
-import { roomController } from '@/controllers';
+import { authMiddleware, roomController } from '@/controllers';
 
 export const v1Router = Router();
 
@@ -45,5 +45,27 @@ v1Router.post(
  */
 v1Router.get(
   '/room/demo',
-  async (req, res) => await roomController.getDemoCredentials(req, res),
+  async (req, res) => await roomController.getDemoAccessToken(req, res),
+);
+
+/**
+ * @swagger
+ * /room/invite:
+ *   get:
+ *     summary: Create access token for a new participant in the same room
+ *     description: Create access token for a new participant in the same room
+ *     responses:
+ *      200:
+ *       content:
+ *         application/json:
+ *          schema:
+ *           type: object
+ *           properties:
+ *            guestAccessToken:
+ *             type: string
+ */
+v1Router.get(
+  '/room/invite',
+  async (req, res, next) => await authMiddleware.run(req, res, next),
+  async (req, res) => await roomController.getGuestAccessToken(req, res),
 );

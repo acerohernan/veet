@@ -39,6 +39,7 @@
     "express": "^4.18.2",
     "express-promise-router": "^4.1.1",
     "helmet": "^7.1.0",
+    "jose": "^5.2.2",
     "livekit-server-sdk": "1.2.7",
     "morgan": "^1.10.0",
     "nanoid": "3",
@@ -54,6 +55,7 @@
     "lint": "eslint src/**/*.ts",
     "format": "prettier --write src",
     "test": "jest",
-    "test:unit": "jest --testMatch **/src/**/*.test.ts"
+    "test:unit": "jest --testMatch **/src/**/*.test.ts",
+    "test:e2e": "jest --testMatch **/tests/e2e/**/*.test.ts"
   }
 }

@@ -24,3 +24,15 @@ export type GetDemoRoomCredsDTO = z.infer<typeof GetDemoRoomCredsSchema>;
 export interface GetDemoRoomCredsResponse {
   accessToken: string;
 }
+
+// get credentials for new guest
+export const GetCredsForGuestSchema = z.object({
+  roomId: z.string(),
+  participantName: z.string(),
+});
+
+export type GetCredsForGuestDTO = z.infer<typeof GetCredsForGuestSchema>;
+
+export interface GetCredsForGuestResponse {
+  guestAccessToken: string;
+}

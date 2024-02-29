@@ -4,11 +4,15 @@ import {
   type CreateRoomResponse,
   type GetDemoRoomCredsResponse,
   type GetDemoRoomCredsDTO,
+  type GetCredsForGuestDTO,
+  type GetCredsForGuestResponse,
+  GetCredsForGuestSchema,
   GetDemoRoomCredsSchema,
 } from '../schemas/room.schemas';
 
 import type { RTCService } from '../interfaces/rtc.service';
 
+import { generateID } from '../utils/id';
 import { parseZodError } from '../utils/zod';
 
 import { BadRequestError } from '../errors/http';
@@ -24,11 +28,7 @@ export class RoomService {
 
     await this.rtcService.createRoom(dto.roomId);
 
-    const result = await this.rtcService.createAccessToken(
-      dto.roomId,
-      dto.participantId,
-      dto.participantName,
-    );
+    const result = await this.rtcService.createAccessToken(dto);
 
     return { roomId: dto.roomId, accessToken: result.accessToken };
   }
@@ -41,11 +41,25 @@ export class RoomService {
     if (!validation.success)
       throw new BadRequestError(parseZodError(validation.error));
 
-    const resp = await this.rtcService.createAccessToken(
-      'demo',
-      dto.participantId,
-      dto.participantName,
-    );
+    const resp = await this.rtcService.createAccessToken({
+      ...dto,
+      roomId: 'demo',
+    });
     return { accessToken: resp.accessToken };
+  }
+
+  async getGuestCredentials(
+    dto: GetCredsForGuestDTO,
+  ): Promise<GetCredsForGuestResponse> {
+    const validation = GetCredsForGuestSchema.safeParse(dto);
+
+    if (!validation.success)
+      throw new BadRequestError(parseZodError(validation.error));
+
+    const resp = await this.rtcService.createAccessToken({
+      ...dto,
+      participantId: generateID(),
+    });
+    return { guestAccessToken: resp.accessToken };
   }
 }
