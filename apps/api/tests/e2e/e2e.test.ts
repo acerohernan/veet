@@ -3,14 +3,20 @@ import type TestAgent from 'supertest/lib/agent';
 
 import { Server } from '../../src/server';
 
+import type { RTCService } from '@/domain/interfaces/rtc.service';
+
+import { LivekitRTCService } from '@/infrastructure/livekit/livekit.rtc.service';
+
 let app: Server;
 let _request: TestAgent;
+let rtcService: RTCService;
 
 describe('API Service routes', () => {
   beforeAll(async () => {
     app = new Server();
     app.run();
     _request = request(app.httpServer);
+    rtcService = new LivekitRTCService();
   });
 
   afterAll(async () => {
@@ -30,7 +36,8 @@ describe('API Service routes', () => {
     it('should run correctly and return an access token', async () => {
       const res = await _request.post('/v1/room').send({
         roomId: 'room_test123',
-        participant: { id: 'test123', name: 'test123' },
+        participantId: 'test123',
+        participantName: 'test123',
       });
 
       expect(res.status).toBe(201);
@@ -47,6 +54,33 @@ describe('API Service routes', () => {
 
       expect(res.status).toBe(200);
       expect(res.body.accessToken).toBeDefined();
+    });
+  });
+
+  describe('GET/v1/room/invite', () => {
+    it('should return an unathorized status for calls without a token', async () => {
+      const query = new URLSearchParams();
+      const res = await _request.get('/v1/room/invite').query(query.toString());
+
+      expect(res.status).toBe(401);
+    });
+
+    it('should run correctly and return an access token for invited participant', async () => {
+      const { accessToken } = await rtcService.createAccessToken({
+        roomId: 'demo',
+        participantId: 'guest123',
+        participantName: 'Guest',
+      });
+
+      const query = new URLSearchParams();
+      query.append('participantName', 'Guest');
+      const res = await _request
+        .get('/v1/room/invite')
+        .query(query.toString())
+        .set('Authorization', `Bearer ${accessToken}`);
+
+      expect(res.status).toBe(200);
+      expect(res.body.guestAccessToken).toBeDefined();
     });
   });
 });
