@@ -10,6 +10,7 @@ export interface Room {
 // shared properties
 interface Participant {
   id: string;
+  name: string;
 }
 
 export interface LocalParticipant extends Participant {}

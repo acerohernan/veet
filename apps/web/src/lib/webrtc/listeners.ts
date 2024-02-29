@@ -4,7 +4,7 @@ import { store } from "@/store";
 import { roomActions } from "@/store/room";
 
 export const handleParticipantConnected = (participant: RemoteParticipant) => {
-  store.dispatch(roomActions.addParticipant({ id: participant.sid }));
+  store.dispatch(roomActions.addParticipant({ id: participant.sid, name: participant.name! }));
 };
 
 export const handleParticipantDisconnected = (participant: RemoteParticipant) => {

@@ -25,16 +25,21 @@ export const connectToWebRTCRoom = async (accessToken: string) => {
 
   // store information
   store.dispatch(roomActions.setRoom({ id: room.name }));
-  store.dispatch(roomActions.setLocalParticipant({ id: room.localParticipant.sid }));
+  store.dispatch(
+    roomActions.setLocalParticipant({
+      id: room.localParticipant.sid,
+      name: room.localParticipant.name!,
+    }),
+  );
 
   const participants: RemoteParticipant[] = [];
   for (const [, p] of room.remoteParticipants) {
-    participants.push({ id: p.sid });
+    participants.push({ id: p.sid, name: p.name! });
   }
   store.dispatch(roomActions.setParticipants(participants));
 };
 
-export const disconnectToRoom = async () => {
+export const disconnectFromRoom = async () => {
   if (!room) return;
 
   await room.disconnect(true);
@@ -44,3 +49,5 @@ export const disconnectToRoom = async () => {
   store.dispatch(roomActions.setLocalParticipant(null));
   store.dispatch(roomActions.setParticipants([]));
 };
+
+// TODO: prender y apagar cámara y micrófono
