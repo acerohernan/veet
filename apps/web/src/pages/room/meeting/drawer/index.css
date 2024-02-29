@@ -1,0 +1,19 @@
+#meeting-drawer::-webkit-scrollbar {
+  width: 5px;
+  background: white;
+}
+
+#meeting-drawer::-webkit-scrollbar-track {
+  background: white;
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+}
+
+#meeting-drawer::-webkit-scrollbar-thumb {
+  background: gray;
+  border: none;
+}
+
+#meeting-drawer::-webkit-scrollbar-thumb:hover {
+  background: rgb(94, 94, 94);
+}
