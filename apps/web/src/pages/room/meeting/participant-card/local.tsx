@@ -1,16 +1,13 @@
-import React from "react";
 import { Avatar, Box, Typography } from "@mui/material";
 
 import MicOffIcon from "@mui/icons-material/MicOff";
 
 import { useAppSelector } from "@/store";
 
-interface Props {
-  id: string;
-}
+export const LocalParticipantCard = () => {
+  const participant = useAppSelector((state) => state.room.localParticipant);
 
-export const ParticipantCard: React.FC<Props> = ({ id }) => {
-  const participant = useAppSelector((state) => state.room.participants.entities[id]);
+  if (!participant) return;
 
   return (
     <Box

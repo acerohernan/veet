@@ -1,11 +1,15 @@
-import { memo } from "react";
 import { Avatar, Box, IconButton, Typography } from "@mui/material";
 
 import MoreVertIcon from "@mui/icons-material/MoreVert";
+import { useAppSelector } from "@/store";
 
-interface Props {}
+interface Props {
+  id: string;
+}
 
-export const ParticipantCard: React.FC<Props> = memo(() => {
+export const ParticipantCard: React.FC<Props> = ({ id }) => {
+  const participant = useAppSelector((state) => state.room.participants.entities[id]);
+
   return (
     <Box
       sx={{
@@ -21,8 +25,8 @@ export const ParticipantCard: React.FC<Props> = memo(() => {
           gap: 2,
         }}
       >
-        <Avatar>H</Avatar>
-        <Typography fontSize="0.875rem">Hernan</Typography>
+        <Avatar>{participant.name.slice(0, 1).toUpperCase()}</Avatar>
+        <Typography fontSize="0.875rem">{participant.name}</Typography>
       </Box>
       <Box
         sx={{
@@ -38,4 +42,4 @@ export const ParticipantCard: React.FC<Props> = memo(() => {
       </Box>
     </Box>
   );
-});
+};

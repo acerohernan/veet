@@ -10,7 +10,7 @@ import VideocamOffOutlinedIcon from "@mui/icons-material/VideocamOffOutlined";
 import PresentToAllOutlinedIcon from "@mui/icons-material/PresentToAllOutlined";
 
 import { toast } from "@/lib/ui/toast";
-import { disconnectToRoom } from "@/lib/webrtc";
+import { disconnectFromRoom } from "@/lib/webrtc";
 
 export const MainControls = () => {
   const [micOn, setMicOn] = useState(false);
@@ -31,7 +31,7 @@ export const MainControls = () => {
 
   async function leaveRoom() {
     try {
-      await disconnectToRoom();
+      await disconnectFromRoom();
       // show a leave page where you can rejoin with the token in session storage
     } catch (error) {
       toast.error("Error at disconnecting to room");

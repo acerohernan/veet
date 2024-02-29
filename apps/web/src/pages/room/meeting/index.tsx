@@ -6,8 +6,8 @@ import { useAppSelector } from "@/store";
 import LoadingPage from "@/pages/loading";
 
 import { toast } from "@/lib/ui/toast";
-import { connectToWebRTCRoom } from "@/lib/webrtc";
 import { getAccessToken } from "@/lib/auth/accessToken";
+import { connectToWebRTCRoom, disconnectFromRoom } from "@/lib/webrtc";
 
 import { captureError } from "@/utils/error";
 
@@ -17,10 +17,12 @@ import { MainControls } from "./main-controls";
 import { DrawerControls } from "./drawer-controls";
 import { ParticipantCard } from "./participant-card";
 import { UnathorizedRoom } from "../unauthorized";
+import { LocalParticipantCard } from "./participant-card/local";
 
 export const RoomMeeting = () => {
   const accessToken = getAccessToken();
   const room = useAppSelector((state) => state.room.room);
+  const participantsIds = useAppSelector((state) => state.room.participants.ids);
 
   const [connecting, setConnecting] = useState(true);
   const [connectionError, setConnectionError] = useState(false);
@@ -43,6 +45,10 @@ export const RoomMeeting = () => {
     }
 
     connect();
+
+    return () => {
+      disconnectFromRoom();
+    };
   }, [accessToken]);
 
   if (connecting) return <LoadingPage />;
@@ -81,7 +87,10 @@ export const RoomMeeting = () => {
             height: "100%",
           }}
         >
-          <ParticipantCard />
+          <LocalParticipantCard />
+          {participantsIds.map((id) => (
+            <ParticipantCard id={id} />
+          ))}
         </Box>
         <MeetingDrawer />
       </Box>
@@ -131,7 +140,7 @@ export const RoomMeeting = () => {
             />
           </Box>
           <Typography color="white" fontSize="1.1rem" fontWeight={300}>
-            wes-rpdt-dqe
+            {room.id}
           </Typography>
         </Box>
         <MainControls />
