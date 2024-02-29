@@ -1,19 +1,17 @@
 import { useState } from "react";
 import LoadingButton from "@mui/lab/LoadingButton";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Box, Button, Typography } from "@mui/material";
-
-import { useAppSelector } from "@/store";
 
 import { toast } from "@/lib/ui/toast";
 import { connectToWebRTCRoom } from "@/lib/webrtc";
+import { getAccessToken } from "@/lib/auth/accessToken";
 
 import { captureError } from "@/utils/error";
 
 export const RoomLeft = () => {
   const navigate = useNavigate();
-  const { roomId } = useParams();
-  const accessToken = useAppSelector((state) => state.navigation.tokens[roomId ?? ""]);
+  const accessToken = getAccessToken();
 
   const [loading, setLoading] = useState(false);
 
