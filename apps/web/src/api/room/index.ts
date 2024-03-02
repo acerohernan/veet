@@ -1,14 +1,14 @@
 import { authHeaders, axiosInstance } from "../config";
 
-import { APIResponse, Participant } from "../types";
+import { APIResponse } from "../types";
 
 import { parseAxiosError } from "../utils";
 
 export const createRoom = async (
-  participant: Participant,
+  participantName: string,
 ): Promise<APIResponse<{ accessToken: string; roomId: string }>> => {
   try {
-    const res = await axiosInstance.post("/room", { participantName: participant.name });
+    const res = await axiosInstance.post("/room", { participantName });
     return {
       statusCode: 200,
       data: res.data,
@@ -18,10 +18,10 @@ export const createRoom = async (
   }
 };
 
-export const getDemoCredentials = async (participant: Participant): Promise<APIResponse<{ accessToken: string }>> => {
+export const getDemoCredentials = async (participantName: string): Promise<APIResponse<{ accessToken: string }>> => {
   try {
     const query = new URLSearchParams();
-    query.append("participantName", participant.name);
+    query.append("participantName", participantName);
     const res = await axiosInstance.get("/room/demo?" + query.toString());
     return {
       statusCode: res.status,
@@ -32,9 +32,13 @@ export const getDemoCredentials = async (participant: Participant): Promise<APIR
   }
 };
 
-export const getGuestCredentials = async (): Promise<APIResponse<{ guestAccessToken: string }>> => {
+export const getGuestCredentials = async (
+  participantName: string,
+): Promise<APIResponse<{ guestAccessToken: string }>> => {
   try {
-    const res = await axiosInstance.get("/room/invite", { headers: authHeaders() });
+    const query = new URLSearchParams();
+    query.append("participantName", participantName);
+    const res = await axiosInstance.get("/room/invite?" + query.toString(), { headers: authHeaders() });
     return {
       statusCode: res.status,
       data: res.data,
