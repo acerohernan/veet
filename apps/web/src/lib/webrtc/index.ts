@@ -1,10 +1,20 @@
 import { Room, RoomEvent, setLogLevel } from "livekit-client";
 
-import { handleParticipantConnected, handleParticipantDisconnected } from "./listeners";
+import {
+  handleParticipantConnected,
+  handleParticipantDisconnected,
+  handleTrackMuted,
+  handleTrackSubscribed,
+  handleTrackUnMuted,
+  handleLocalTrackPublished,
+  handleLocalTrackUnpublished,
+} from "./listeners";
 
 import { store } from "@/store";
 import { roomActions } from "@/store/room";
 import { RemoteParticipant } from "@/store/types";
+
+import { parseLivekitParticipant } from "./utils";
 
 let room: Room | undefined;
 
@@ -19,22 +29,22 @@ export const connectToWebRTCRoom = async (accessToken: string) => {
   // setup listeners
   room
     .on(RoomEvent.ParticipantConnected, handleParticipantConnected)
-    .on(RoomEvent.ParticipantDisconnected, handleParticipantDisconnected);
+    .on(RoomEvent.ParticipantDisconnected, handleParticipantDisconnected)
+    .on(RoomEvent.TrackSubscribed, handleTrackSubscribed)
+    .on(RoomEvent.LocalTrackPublished, handleLocalTrackPublished)
+    .on(RoomEvent.LocalTrackUnpublished, handleLocalTrackUnpublished)
+    .on(RoomEvent.TrackMuted, handleTrackMuted)
+    .on(RoomEvent.TrackUnmuted, handleTrackUnMuted);
 
   await room.connect(import.meta.env.VITE_LIVEKIT_WS_URL, accessToken);
 
   // store information
   store.dispatch(roomActions.setRoom({ id: room.name }));
-  store.dispatch(
-    roomActions.setLocalParticipant({
-      id: room.localParticipant.sid,
-      name: room.localParticipant.name!,
-    }),
-  );
+  store.dispatch(roomActions.setLocalParticipant(parseLivekitParticipant(room.localParticipant)));
 
   const participants: RemoteParticipant[] = [];
   for (const [, p] of room.remoteParticipants) {
-    participants.push({ id: p.sid, name: p.name! });
+    participants.push(parseLivekitParticipant(p));
   }
   store.dispatch(roomActions.setParticipants(participants));
 };
@@ -50,4 +60,7 @@ export const disconnectFromRoom = async () => {
   store.dispatch(roomActions.setParticipants([]));
 };
 
-// TODO: prender y apagar cámara y micrófono
+export const getWebRTCRoom = (): Room => {
+  if (!room) throw new Error("webrtc room connection not established!");
+  return room;
+};
