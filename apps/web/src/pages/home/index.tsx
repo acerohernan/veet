@@ -1,7 +1,7 @@
 import { useState } from "react";
-import LoadingButton from "@mui/lab/LoadingButton";
 import { useNavigate } from "react-router-dom";
-import { Box, Typography } from "@mui/material";
+import LoadingButton from "@mui/lab/LoadingButton";
+import { Box, TextField, Typography } from "@mui/material";
 
 import CallIcon from "@mui/icons-material/Call";
 import VideoCallOutlinedIcon from "@mui/icons-material/VideoCallOutlined";
@@ -13,14 +13,16 @@ import { captureError } from "@/utils/error";
 const HomePage = () => {
   const navigate = useNavigate();
 
+  const [name, setName] = useState("");
   const [createRoomLoading, setCreateRoomLoading] = useState(false);
   const [enterDemoRoomLoading, setEnterDemoRoomLoading] = useState(false);
+
+  const nameIsValid = name.length > 5;
 
   const createRoom = async () => {
     setCreateRoomLoading(true);
     try {
-      const name = "Guest";
-      const res = await API.room.createRoom({ name });
+      const res = await API.room.createRoom(name);
       if (!res.data) return;
 
       const { roomId, accessToken } = res.data;
@@ -35,8 +37,7 @@ const HomePage = () => {
   const enterDemoRoom = async () => {
     setEnterDemoRoomLoading(true);
     try {
-      const name = "Guest";
-      const res = await API.room.getDemoCredentials({ name });
+      const res = await API.room.getDemoCredentials(name);
       if (!res.data) return;
 
       const { accessToken } = res.data;
@@ -78,6 +79,13 @@ const HomePage = () => {
           Veet provides secure, easy-to-use video calls and meetings for everyone, on any device
         </Typography>
         <Box
+          sx={{
+            marginTop: 4,
+          }}
+        >
+          <TextField label="Name" fullWidth onChange={(e) => setName(e.target.value)} />
+        </Box>
+        <Box
           width="100%"
           sx={{
             display: "flex",
@@ -91,7 +99,6 @@ const HomePage = () => {
             justifyContent: "center",
             marginTop: {
               xs: 3,
-              md: 8,
             },
           }}
           gap={3}
@@ -103,6 +110,7 @@ const HomePage = () => {
             startIcon={<VideoCallOutlinedIcon />}
             onClick={createRoom}
             loading={createRoomLoading}
+            disabled={!nameIsValid}
           >
             New meeting
           </LoadingButton>
@@ -113,6 +121,7 @@ const HomePage = () => {
             startIcon={<CallIcon />}
             onClick={enterDemoRoom}
             loading={enterDemoRoomLoading}
+            disabled={!nameIsValid}
           >
             Enter demo meeting
           </LoadingButton>
