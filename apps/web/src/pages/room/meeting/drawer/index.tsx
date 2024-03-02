@@ -45,6 +45,7 @@ export const MeetingDrawer = () => {
         overflowX: "hidden",
         transition: "transform 0.3s ease-in-out",
         transform: isDrawerOpen ? "translateX(0%)" : "translateX(100%)",
+        zIndex: 10,
       }}
     >
       <Box display="flex" alignItems="center" justifyContent="space-between">
