@@ -10,19 +10,26 @@ import VideocamOffOutlinedIcon from "@mui/icons-material/VideocamOffOutlined";
 import PresentToAllOutlinedIcon from "@mui/icons-material/PresentToAllOutlined";
 
 import { toast } from "@/lib/ui/toast";
-import { disconnectFromRoom } from "@/lib/webrtc";
+import { disconnectFromRoom, getWebRTCRoom } from "@/lib/webrtc";
 
 export const MainControls = () => {
   const [micOn, setMicOn] = useState(false);
   const [cameraOn, setCameraOn] = useState(false);
   const [screenShareOn, setScreenShareOn] = useState(false);
 
+  const { localParticipant } = getWebRTCRoom();
+
   function toggleMicrophone() {
     setMicOn((prev) => !prev);
   }
 
   function toggleCamera() {
-    setCameraOn((prev) => !prev);
+    try {
+      localParticipant.setCameraEnabled(!cameraOn);
+      setCameraOn((prev) => !prev);
+    } catch (error) {
+      toast.error("error at toggling camera");
+    }
   }
 
   function toggleScreenShare() {
@@ -31,10 +38,9 @@ export const MainControls = () => {
 
   async function leaveRoom() {
     try {
-      await disconnectFromRoom();
-      // show a leave page where you can rejoin with the token in session storage
+      disconnectFromRoom();
     } catch (error) {
-      toast.error("Error at disconnecting to room");
+      toast.error("Error at leaving to room");
     }
   }
 
