@@ -32,12 +32,14 @@ export const AddPeopleButton = () => {
 
   function handleClose() {
     setOpen(false);
+    setGeneratedLink("");
+    setName("");
   }
 
   async function generateInviteLink() {
     setLoading(true);
     try {
-      const res = await API.room.getGuestCredentials();
+      const res = await API.room.getGuestCredentials(name);
       if (!res.data) throw new Error("couldn't get guest credentials");
       setGeneratedLink(`${import.meta.env.VITE_URL}/${roomId}?accessToken=${res.data.guestAccessToken}`);
       toast.success("Invite link generated successfully");
