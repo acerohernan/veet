@@ -1,17 +1,37 @@
+import { Track } from "livekit-client";
+import { useEffect, useRef } from "react";
 import { Avatar, Box, Typography } from "@mui/material";
 
 import MicOffIcon from "@mui/icons-material/MicOff";
 
 import { useAppSelector } from "@/store";
 
-export const LocalParticipantCard = () => {
-  const participant = useAppSelector((state) => state.room.localParticipant);
+import { getWebRTCRoom } from "@/lib/webrtc";
 
-  if (!participant) return;
+export const LocalParticipantCard = () => {
+  const me = useAppSelector((state) => state.room.localParticipant);
+  const room = getWebRTCRoom();
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    if (!videoRef.current) return;
+
+    const publication = room.localParticipant.getTrackPublication(Track.Source.Camera);
+    if (!publication || !publication.isSubscribed) return;
+
+    if (me?.isCameraEnabled) {
+      publication.videoTrack?.attach(videoRef.current);
+    } else {
+      publication.videoTrack?.detach(videoRef.current);
+    }
+  }, [me?.isCameraEnabled, room.localParticipant]);
+
+  if (!me) return;
 
   return (
     <Box
       sx={{
+        position: "relative",
         backgroundColor: "#3C4043",
         borderRadius: 2,
         display: "flex",
@@ -27,7 +47,23 @@ export const LocalParticipantCard = () => {
         height: "auto",
       }}
     >
-      <Box sx={{ display: "flex", alignItems: "center", justifyContent: "end" }}>
+      <video
+        ref={videoRef}
+        style={{
+          borderRadius: "inherit",
+          position: "absolute",
+          display: me.isCameraEnabled ? "block" : "none",
+          top: 0,
+          bottom: 0,
+          right: 0,
+          left: 0,
+          objectFit: "cover",
+          width: "100%",
+          height: "100%",
+          zIndex: 1,
+        }}
+      />
+      <Box sx={{ display: "flex", alignItems: "center", justifyContent: "end", zIndex: 2 }}>
         <Box
           padding="4px"
           sx={{
@@ -59,12 +95,12 @@ export const LocalParticipantCard = () => {
           }}
           variant="circular"
         >
-          {participant.name.slice(0, 1).toUpperCase()}
+          {me.name.slice(0, 1).toUpperCase()}
         </Avatar>
       </Box>
-      <Box>
+      <Box sx={{ zIndex: 2 }}>
         <Typography color="white" fontWeight={300}>
-          {participant.name}
+          {me.name} (You)
         </Typography>
       </Box>
     </Box>

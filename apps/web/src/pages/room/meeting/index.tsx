@@ -11,6 +11,7 @@ import { connectToWebRTCRoom, disconnectFromRoom } from "@/lib/webrtc";
 
 import { captureError } from "@/utils/error";
 
+import { MeetingHour } from "./hour";
 import { RoomLeft } from "../room-left";
 import { MeetingDrawer } from "./drawer";
 import { MainControls } from "./main-controls";
@@ -89,7 +90,7 @@ export const RoomMeeting = () => {
         >
           <LocalParticipantCard />
           {participantsIds.map((id) => (
-            <ParticipantCard id={id} />
+            <ParticipantCard id={id} key={id} />
           ))}
         </Box>
         <MeetingDrawer />
@@ -128,9 +129,7 @@ export const RoomMeeting = () => {
             justifyContent="center"
             gap={2}
           >
-            <Typography color="white" fontSize="1.1rem" fontWeight={300}>
-              9:44 PM
-            </Typography>
+            <MeetingHour />
             <Box
               sx={{
                 width: "1px",
