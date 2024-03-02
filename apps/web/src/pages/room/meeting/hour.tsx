@@ -7,7 +7,7 @@ export const MeetingHour = () => {
   const [currentTime, setCurrentTime] = useState(getCurrentTime);
 
   useEffect(() => {
-    const interval = setInterval(() => setCurrentTime(getCurrentTime), 20 * 1000);
+    const interval = setInterval(() => setCurrentTime(getCurrentTime), 10 * 1000);
 
     return () => {
       clearInterval(interval);
