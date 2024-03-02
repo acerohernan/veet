@@ -8,5 +8,6 @@ export const parseLivekitParticipant = (participant: LivekitParticipant): Partic
     identity: participant.identity,
     isCameraEnabled: participant.isCameraEnabled,
     name: participant.name!,
+    isMicrophoneEnabled: participant.isMicrophoneEnabled,
   };
 };

@@ -13,6 +13,7 @@ export interface Participant {
   name: string;
   identity: string;
   isCameraEnabled: boolean;
+  isMicrophoneEnabled: boolean;
 }
 
 export interface LocalParticipant extends Participant {}

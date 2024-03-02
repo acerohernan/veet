@@ -20,7 +20,10 @@ export const handleTrackSubscribed = (_: RemoteTrack, __: TrackPublication, part
   store.dispatch(
     roomActions.updateParticipant({
       id: participant.sid,
-      changes: { isCameraEnabled: participant.isCameraEnabled },
+      changes: {
+        isCameraEnabled: participant.isCameraEnabled,
+        isMicrophoneEnabled: participant.isMicrophoneEnabled,
+      },
     }),
   );
 };
@@ -30,6 +33,7 @@ export const handleTrackMuted = (_: TrackPublication, participant: Participant) 
     store.dispatch(
       roomActions.updateLocalParticipant({
         isCameraEnabled: participant.isCameraEnabled,
+        isMicrophoneEnabled: participant.isMicrophoneEnabled,
       }),
     );
     return;
@@ -42,7 +46,10 @@ export const handleTrackMuted = (_: TrackPublication, participant: Participant) 
   store.dispatch(
     roomActions.updateParticipant({
       id: participant.sid,
-      changes: { isCameraEnabled: participant.isCameraEnabled },
+      changes: {
+        isCameraEnabled: participant.isCameraEnabled,
+        isMicrophoneEnabled: participant.isMicrophoneEnabled,
+      },
     }),
   );
 };
@@ -52,6 +59,7 @@ export const handleTrackUnMuted = (_: TrackPublication, participant: Participant
     store.dispatch(
       roomActions.updateLocalParticipant({
         isCameraEnabled: participant.isCameraEnabled,
+        isMicrophoneEnabled: participant.isMicrophoneEnabled,
       }),
     );
     return;
@@ -64,7 +72,10 @@ export const handleTrackUnMuted = (_: TrackPublication, participant: Participant
   store.dispatch(
     roomActions.updateParticipant({
       id: participant.sid,
-      changes: { isCameraEnabled: participant.isCameraEnabled },
+      changes: {
+        isCameraEnabled: participant.isCameraEnabled,
+        isMicrophoneEnabled: participant.isMicrophoneEnabled,
+      },
     }),
   );
 };
@@ -73,6 +84,7 @@ export const handleLocalTrackPublished = (_: TrackPublication, participant: Loca
   store.dispatch(
     roomActions.updateLocalParticipant({
       isCameraEnabled: participant.isCameraEnabled,
+      isMicrophoneEnabled: participant.isMicrophoneEnabled,
     }),
   );
 };
@@ -81,6 +93,7 @@ export const handleLocalTrackUnpublished = (_: TrackPublication, participant: Lo
   store.dispatch(
     roomActions.updateLocalParticipant({
       isCameraEnabled: participant.isCameraEnabled,
+      isMicrophoneEnabled: participant.isMicrophoneEnabled,
     }),
   );
 };
