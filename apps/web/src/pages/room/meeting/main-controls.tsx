@@ -7,7 +7,6 @@ import MicOffIcon from "@mui/icons-material/MicOff";
 import CallEndIcon from "@mui/icons-material/CallEnd";
 import VideocamOutlinedIcon from "@mui/icons-material/VideocamOutlined";
 import VideocamOffOutlinedIcon from "@mui/icons-material/VideocamOffOutlined";
-import PresentToAllOutlinedIcon from "@mui/icons-material/PresentToAllOutlined";
 
 import { toast } from "@/lib/ui/toast";
 import { disconnectFromRoom, getWebRTCRoom } from "@/lib/webrtc";
@@ -15,12 +14,16 @@ import { disconnectFromRoom, getWebRTCRoom } from "@/lib/webrtc";
 export const MainControls = () => {
   const [micOn, setMicOn] = useState(false);
   const [cameraOn, setCameraOn] = useState(false);
-  const [screenShareOn, setScreenShareOn] = useState(false);
 
   const { localParticipant } = getWebRTCRoom();
 
   function toggleMicrophone() {
-    setMicOn((prev) => !prev);
+    try {
+      localParticipant.setMicrophoneEnabled(!micOn);
+      setMicOn((prev) => !prev);
+    } catch (error) {
+      toast.error("error at toggling microphone");
+    }
   }
 
   function toggleCamera() {
@@ -30,10 +33,6 @@ export const MainControls = () => {
     } catch (error) {
       toast.error("error at toggling camera");
     }
-  }
-
-  function toggleScreenShare() {
-    setScreenShareOn((prev) => !prev);
   }
 
   async function leaveRoom() {
@@ -49,7 +48,6 @@ export const MainControls = () => {
       sx={{
         display: "flex",
         gap: 2,
-
         justifyContent: "center",
       }}
     >
@@ -62,11 +60,6 @@ export const MainControls = () => {
       <Tooltip title={`Turn ${micOn ? "on" : "off"} camera`}>
         <IconButton color={cameraOn ? "on" : "off"} onClick={toggleCamera} size="small">
           {cameraOn ? <VideocamOutlinedIcon /> : <VideocamOffOutlinedIcon />}
-        </IconButton>
-      </Tooltip>
-      <Tooltip title={screenShareOn ? "Stop presenting" : "Present now"}>
-        <IconButton color={screenShareOn ? "active" : "on"} onClick={toggleScreenShare} size="small">
-          <PresentToAllOutlinedIcon />
         </IconButton>
       </Tooltip>
       <Button color="error" variant="contained" sx={{ borderRadius: "22px" }} onClick={leaveRoom}>
