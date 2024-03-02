@@ -8,29 +8,29 @@ import type { AuthMiddlewareLocals } from '@/middlewares/auth';
 export class RoomController {
   constructor(private readonly roomService: RoomService) {}
 
-  async postCreateRoom(_: Request, res: Response): Promise<void> {
+  async postCreateRoom(req: Request, res: Response): Promise<void> {
     const participantId = generateID();
 
     const resp = await this.roomService.createRoom({
       roomId: generateID(),
       participantId,
-      participantName: `Guest-${participantId}`,
+      participantName: req.body.participantName,
     });
     res.status(201).send(resp);
   }
 
-  async getDemoAccessToken(_: Request, res: Response): Promise<void> {
+  async getDemoAccessToken(req: Request, res: Response): Promise<void> {
     const participantId = generateID();
 
     const resp = await this.roomService.getDemoCredentials({
       participantId,
-      participantName: `Guest-${participantId}`,
+      participantName: req.query.participantName as string,
     });
     res.send(resp);
   }
 
   async getGuestAccessToken(
-    _: Request,
+    req: Request,
     res: Response<any, AuthMiddlewareLocals>,
   ): Promise<void> {
     const { rtcClaims } = res.locals;
@@ -41,7 +41,7 @@ export class RoomController {
     }
 
     const result = await this.roomService.getGuestCredentials({
-      participantName: `Guest-${generateID()}`,
+      participantName: req.query.participantName as string,
       roomId: rtcClaims.roomId,
     });
 
