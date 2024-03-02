@@ -2,6 +2,7 @@ import { Track } from "livekit-client";
 import { useEffect, useRef } from "react";
 import { Avatar, Box, Typography } from "@mui/material";
 
+import MicIcon from "@mui/icons-material/Mic";
 import MicOffIcon from "@mui/icons-material/MicOff";
 
 import { useAppSelector } from "@/store";
@@ -47,6 +48,36 @@ export const LocalParticipantCard = () => {
         height: "auto",
       }}
     >
+      {me.isCameraEnabled ? (
+        <>
+          {/* Top shadow */}
+          <Box
+            width="100%"
+            height="80px"
+            sx={{
+              top: 0,
+              left: 0,
+              zIndex: 2,
+              position: "absolute",
+              backgroundImage: "linear-gradient(to bottom,rgba(0,0,0,0.7) 0,rgba(0,0,0,0.3) 50%,rgba(0,0,0,0) 100%)",
+            }}
+            borderRadius="inherit"
+          />
+          {/* Botton shadow */}
+          <Box
+            width="100%"
+            padding={2}
+            sx={{
+              bottom: 0,
+              zIndex: 2,
+              left: 0,
+              position: "absolute",
+              backgroundImage: "linear-gradient(to top,rgba(0,0,0,0.7) 0,rgba(0,0,0,0.3) 50%,rgba(0,0,0,0) 100%)",
+            }}
+            borderRadius="inherit"
+          />
+        </>
+      ) : null}
       <video
         ref={videoRef}
         style={{
@@ -75,7 +106,11 @@ export const LocalParticipantCard = () => {
             justifyContent: "center",
           }}
         >
-          <MicOffIcon sx={{ fontSize: "1.2rem" }} />
+          {me.isMicrophoneEnabled ? (
+            <MicIcon sx={{ fontSize: "1.2rem" }} />
+          ) : (
+            <MicOffIcon sx={{ fontSize: "1.2rem" }} />
+          )}
         </Box>
       </Box>
       <Box

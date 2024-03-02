@@ -13,17 +13,14 @@ import { captureError } from "@/utils/error";
 
 import { MeetingHour } from "./hour";
 import { RoomLeft } from "../room-left";
-import { MeetingDrawer } from "./drawer";
 import { MainControls } from "./main-controls";
 import { DrawerControls } from "./drawer-controls";
-import { ParticipantCard } from "./participant-card";
 import { UnathorizedRoom } from "../unauthorized";
-import { LocalParticipantCard } from "./participant-card/local";
+import { ParticipantsGallery } from "./participants-gallery";
 
 export const RoomMeeting = () => {
   const accessToken = getAccessToken();
   const room = useAppSelector((state) => state.room.room);
-  const participantsIds = useAppSelector((state) => state.room.participants.ids);
 
   const [connecting, setConnecting] = useState(true);
   const [connectionError, setConnectionError] = useState(false);
@@ -70,32 +67,7 @@ export const RoomMeeting = () => {
         backgroundColor: "#202124",
       }}
     >
-      <Box
-        sx={{
-          flex: 1,
-          marginBottom: 2,
-          overflowY: "auto",
-          overflowX: "hidden",
-          position: "relative",
-        }}
-      >
-        <Box
-          sx={{
-            display: "flex",
-            flexWrap: "wrap",
-            justifyContent: "center",
-            gap: 2,
-            height: "100%",
-          }}
-        >
-          <LocalParticipantCard />
-          {participantsIds.map((id) => (
-            <ParticipantCard id={id} key={id} />
-          ))}
-        </Box>
-        <MeetingDrawer />
-      </Box>
-
+      <ParticipantsGallery />
       <Box
         width="100%"
         sx={{
