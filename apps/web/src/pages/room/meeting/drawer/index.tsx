@@ -1,21 +1,28 @@
+import { useEffect, useState } from "react";
 import { Box, IconButton, Typography } from "@mui/material";
 
 import CloseIcon from "@mui/icons-material/Close";
 
 import { DrawerSection } from "@/store/types";
+import { navigationActions } from "@/store/navigation";
+import { useAppDispatch, useAppSelector } from "@/store";
 
 import { PeopleSection } from "./people-section";
 
-import { useAppDispatch, useAppSelector } from "@/store";
-import { navigationActions } from "@/store/navigation";
-
-import "./index.css";
-
 export const MeetingDrawer = () => {
+  const [maxHeight, setMaxHeight] = useState(window.innerHeight - 100);
   const dispatch = useAppDispatch();
 
   const isDrawerOpen = useAppSelector((state) => state.navigation.isDrawerOpen);
   const drawerSection = useAppSelector((state) => state.navigation.drawerSection);
+  useEffect(() => {
+    const reCalculateMaxHeight = () => setMaxHeight(window.innerHeight - 100);
+
+    window.addEventListener("resize", reCalculateMaxHeight);
+    return () => {
+      window.removeEventListener("resize", reCalculateMaxHeight);
+    };
+  }, []);
 
   let title = "";
   let section = <></>;
@@ -29,15 +36,16 @@ export const MeetingDrawer = () => {
 
   return (
     <Box
-      id="meeting-drawer"
+      className="custom-scroll"
       width="100%"
       maxWidth="380px"
       height="100%"
-      position="absolute"
+      position="fixed"
       paddingY={1}
       paddingX={2}
-      top={0}
+      top={16}
       right={0}
+      maxHeight={maxHeight}
       sx={{
         backgroundColor: "white",
         borderRadius: 2,

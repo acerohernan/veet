@@ -1,0 +1,19 @@
+.custom-scroll::-webkit-scrollbar {
+  width: 5px;
+  background: white;
+}
+
+.custom-scroll::-webkit-scrollbar-track {
+  background: white;
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+}
+
+.custom-scroll::-webkit-scrollbar-thumb {
+  background: gray;
+  border: none;
+}
+
+.custom-scroll::-webkit-scrollbar-thumb:hover {
+  background: rgb(94, 94, 94);
+}
