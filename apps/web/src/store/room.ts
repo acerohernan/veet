@@ -1,4 +1,4 @@
-import { EntityState, PayloadAction, createEntityAdapter, createSlice } from "@reduxjs/toolkit";
+import { EntityState, PayloadAction, Update, createEntityAdapter, createSlice } from "@reduxjs/toolkit";
 
 import { LocalParticipant, RemoteParticipant, Room } from "./types";
 
@@ -26,6 +26,10 @@ const roomSlice = createSlice({
     setLocalParticipant: (state, action: PayloadAction<LocalParticipant | null>) => {
       state.localParticipant = action.payload;
     },
+    updateLocalParticipant: (state, action: PayloadAction<Partial<LocalParticipant>>) => {
+      if (!state.localParticipant) return;
+      state.localParticipant = { ...state.localParticipant, ...action.payload };
+    },
     setParticipants: (state, action: PayloadAction<RemoteParticipant[]>) => {
       state.participants = participantAdapter.setMany(state.participants, action);
     },
@@ -34,6 +38,9 @@ const roomSlice = createSlice({
     },
     removeParticipant: (state, action: PayloadAction<string>) => {
       state.participants = participantAdapter.removeOne(state.participants, action);
+    },
+    updateParticipant: (state, action: PayloadAction<Update<RemoteParticipant, string>>) => {
+      state.participants = participantAdapter.updateOne(state.participants, action);
     },
   },
 });

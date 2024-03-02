@@ -8,9 +8,11 @@ export interface Room {
 }
 
 // shared properties
-interface Participant {
+export interface Participant {
   id: string;
   name: string;
+  identity: string;
+  isCameraEnabled: boolean;
 }
 
 export interface LocalParticipant extends Participant {}
