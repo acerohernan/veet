@@ -77,4 +77,13 @@ export const theme = createTheme({
       ],
     },
   },
+  breakpoints: {
+    values: {
+      xs: 0,
+      sm: 540,
+      md: 700,
+      lg: 960,
+      xl: 1280,
+    },
+  },
 });
