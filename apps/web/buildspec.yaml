@@ -1,0 +1,23 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 20
+
+    commands:
+      - yarn install
+
+  build:
+    commands:
+      - yarn web build
+
+  post_build:
+    commands:
+      - aws s3 cp --recursive --acl public-read ./apps/web/dist s3://veet.acerohernan.com/
+      - aws s3 cp --acl public-read --cache-control="max-age=0, no-cache, no-store, must-revalidate" ./apps/web/dist/index.html s3://veet.acerohernan.com/
+      - aws cloudfront create-invalidation --distribution-id E67TY2F4F7TA2 --paths /index.html
+
+artifacts:
+  files:
+    - apps/web/dist/**/*
