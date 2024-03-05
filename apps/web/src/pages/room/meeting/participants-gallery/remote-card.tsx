@@ -62,14 +62,8 @@ export const RemoteParticipantCard: React.FC<Props> = ({ id }) => {
         flex: 1,
         flexBasis: "350px",
         aspectRatio: "12 / 9",
-        maxWidth: {
-          xs: "100%",
-          md: "50%",
-        },
-        maxHeight: {
-          xs: "100%",
-          md: "50%",
-        },
+        maxWidth: "100%",
+        maxHeight: "100%",
         margin: "auto 0px",
         height: "auto",
       }}
