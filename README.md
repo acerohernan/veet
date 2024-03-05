@@ -4,7 +4,7 @@
 
 Veet is a full-stack clone of Google Meet, implemented in frontend with React.js, Node.js backend and deployed to AWS.
 
-## Project sctructure
+## Mono-repository sctructure
 
 ```js
 +-- apps
@@ -13,7 +13,7 @@ Veet is a full-stack clone of Google Meet, implemented in frontend with React.js
 +-- docs // docs assets
 |   +-- screenshoots // full deployed application screenshoots
 +-- infra // Infrastructure as code with AWS CDK in typescript for deploying the app (comming soon)
-+-- package.json // main package.json for the repository
++-- package.json // main package.json for the mono repository
 +--
 ```
 
