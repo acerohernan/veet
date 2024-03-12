@@ -1,5 +1,5 @@
 # Build stage
-FROM node:20-alpine as builder
+FROM --platform=linux/amd64 node:20-alpine as builder
 
 WORKDIR /usr/app
 
@@ -14,7 +14,7 @@ COPY . ./
 RUN yarn build
 
 # Run stage
-FROM node:20-alpine
+FROM --platform=linux/amd64 node:20-alpine
 
 WORKDIR /usr/app
 
