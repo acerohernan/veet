@@ -1,6 +1,6 @@
 # Veet - Open source video conferencing as a service
 
-![Room page](docs/screenshoots/room-page.png)
+![Room page](docs/screenshoots/room-2-page.png)
 
 Veet is a full-stack clone of Google Meet, implemented in frontend with React.js, Node.js backend and deployed to AWS.
 
